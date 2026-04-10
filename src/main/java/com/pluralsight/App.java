@@ -7,30 +7,46 @@ public class App {
     Scanner scanner = new Scanner(System.in);
 
     System.out.print("Enter the first number: ");
-    int num1 = scanner.nextInt();
+    double num1 = scanner.nextDouble();
 
     System.out.print("Enter the second number: ");
-    int num2 = scanner.nextInt();
+    double num2 = scanner.nextDouble();
+    scanner.nextLine();
 
     System.out.print("Possible calculations:\n\t(A)dd\n\t(S)ubtract\n\t(M)ultiply\n\t(D)ivide\nPlease select and option: ");
-    char operator = scanner.next().charAt(0);
+    String operator = scanner.nextLine();
+    String operatorDisplay = "";
+    double result = 0.0;
 
-    switch (operator) {
-      case 'A':
-        System.out.printf("%d + %d = %d\n", num1, num2, num1 + num2);
+    switch (operator.toUpperCase()) {
+      case "A":
+        operatorDisplay = "+";
+        result = num1 + num2;
         break;
-      case 'S':
-        System.out.printf("%d - %d = %d\n", num1, num2, num1 - num2);
+      case "S":
+        operatorDisplay = "-";
+        result = num1 - num2;
         break;
-      case 'M':
-        System.out.printf("%d * %d = %d\n", num1, num2, num1 * num2);
+      case "M":
+        operatorDisplay = "*";
+        result = num1 * num2;
         break;
-      case 'D':
-        System.out.printf("%d / %d = %d\n", num1, num2, num1 / num2);
+      case "D":
+        if (num2 == 0) {
+          System.out.println("Cannot divide by zero");
+          scanner.close();
+          return;
+        }
+        operatorDisplay = "/";
+        result = num1 / num2;
         break;
       default:
         System.out.println("Please only choose A, S, M or D for option");
+        scanner.close();
+        return;
     }
+
+    System.out.printf("%.2f %s %.2f = %.2f\n", num1, operatorDisplay, num2, result);
 
     scanner.close();
   }
